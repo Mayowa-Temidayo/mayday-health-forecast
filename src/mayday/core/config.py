@@ -2,7 +2,6 @@ import yaml
 
 from mayday.core.paths import CONFIG_DIR
 
-
 CONFIG_FILE = CONFIG_DIR / "config.yaml"
 
 
