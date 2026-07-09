@@ -1,0 +1,20 @@
+project:
+  name: MayDay Health Forecast
+  version: 0.1.0
+
+forecast:
+  horizon: 12
+  frequency: W
+  random_seed: 42
+
+nasa_power:
+  base_url: "https://power.larc.nasa.gov/api/temporal/daily/point"
+
+data:
+  raw: data/raw
+  interim: data/interim
+  processed: data/processed
+  external: data/external
+
+logging:
+  level: INFO
