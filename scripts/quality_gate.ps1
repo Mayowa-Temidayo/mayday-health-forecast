@@ -3,7 +3,7 @@ $ErrorActionPreference = "Stop"
 uv sync
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-uv run pytest -v
+uv run pytest -m "not integration" -v
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 uv run ruff check .

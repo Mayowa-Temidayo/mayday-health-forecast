@@ -1,20 +1,31 @@
 project:
-  name: MayDay Health Forecast
-  version: 0.1.0
+  name: "MayDay Health Forecast"
+  version: "0.1.0"
 
 forecast:
   horizon: 12
-  frequency: W
+  frequency: "W"
   random_seed: 42
+  train_ratio: 0.8
+
+kaggle:
+  dataset: "emmanuelniyioriolowo/ncdc-lassa-fever-timeseries-20202025"
 
 nasa_power:
   base_url: "https://power.larc.nasa.gov/api/temporal/daily/point"
+  community: "AG"
+  parameters:
+    - T2M
+    - RH2M
+    - PRECTOTCORR
 
 data:
   raw: data/raw
   interim: data/interim
   processed: data/processed
   external: data/external
+  downloads: data/downloads
+  metadata: data/metadata
 
 logging:
   level: INFO
