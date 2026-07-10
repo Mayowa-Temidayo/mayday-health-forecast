@@ -1,0 +1,38 @@
+state_code,state,capital,latitude,longitude,region
+AB,Abia,Umuahia,5.5320,7.4860,South East
+AD,Adamawa,Yola,9.2035,12.4954,North East
+AK,Akwa Ibom,Uyo,5.0377,7.9128,South South
+AN,Anambra,Awka,6.2104,7.0741,South East
+BA,Bauchi,Bauchi,10.3158,9.8442,North East
+BY,Bayelsa,Yenagoa,4.9267,6.2676,South South
+BE,Benue,Makurdi,7.7337,8.5360,North Central
+BO,Borno,Maiduguri,11.8333,13.1500,North East
+CR,Cross River,Calabar,4.9589,8.3269,South South
+DE,Delta,Asaba,6.2042,6.6959,South South
+EB,Ebonyi,Abakaliki,6.3249,8.1137,South East
+ED,Edo,Benin City,6.3350,5.6037,South South
+EK,Ekiti,Ado-Ekiti,7.6233,5.2209,South West
+EN,Enugu,Enugu,6.5244,7.5086,South East
+FC,FCT,Abuja,9.0765,7.3986,North Central
+GO,Gombe,Gombe,10.2897,11.1673,North East
+IM,Imo,Owerri,5.4833,7.0333,South East
+JI,Jigawa,Dutse,11.7562,9.3388,North West
+KD,Kaduna,Kaduna,10.5222,7.4383,North West
+KN,Kano,Kano,12.0022,8.5920,North West
+KT,Katsina,Katsina,12.9908,7.6018,North West
+KE,Kebbi,Birnin Kebbi,12.4539,4.1975,North West
+KO,Kogi,Lokoja,7.8023,6.7333,North Central
+KW,Kwara,Ilorin,8.5000,4.5500,North Central
+LA,Lagos,Ikeja,6.5244,3.3792,South West
+NA,Nasarawa,Lafia,8.4833,8.5167,North Central
+NI,Niger,Minna,9.6139,6.5569,North Central
+OG,Ogun,Abeokuta,7.1475,3.3619,South West
+ON,Ondo,Akure,7.2508,5.1951,South West
+OS,Osun,Osogbo,7.7710,4.5569,South West
+OY,Oyo,Ibadan,7.3775,3.9470,South West
+PL,Plateau,Jos,9.8965,8.8583,North Central
+RI,Rivers,Port Harcourt,4.8156,7.0498,South South
+SO,Sokoto,Sokoto,13.0622,5.2339,North West
+TA,Taraba,Jalingo,8.8932,11.3596,North East
+YO,Yobe,Damaturu,11.7489,11.9668,North East
+ZA,Zamfara,Gusau,12.1704,6.6641,North West

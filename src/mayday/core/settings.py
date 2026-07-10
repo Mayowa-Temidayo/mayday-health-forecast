@@ -18,6 +18,9 @@ class NASAPowerSettings(BaseModel):
     base_url: str
     community: str
     parameters: list[str]
+    format: str
+    start: str
+    end: str
 
 
 class DataSettings(BaseModel):
