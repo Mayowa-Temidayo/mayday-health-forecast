@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from mayday.ingestion.validator import DataValidator
+from mayday.ingestion.utils.validator import DataValidator
 
 
 def test_validator_accepts_existing_file(tmp_path: Path):

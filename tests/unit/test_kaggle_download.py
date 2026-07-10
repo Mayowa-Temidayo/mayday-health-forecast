@@ -1,6 +1,6 @@
 import pytest
 
-from mayday.ingestion.kaggle import KaggleDataSource
+from mayday.ingestion.sources.kaggle import KaggleDataSource
 
 
 @pytest.mark.integration

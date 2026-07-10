@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from mayday.ingestion.downloader import Downloader
-from mayday.ingestion.validator import DataValidator
+from mayday.ingestion.utils.downloader import Downloader
+from mayday.ingestion.utils.validator import DataValidator
 
 
 class DataIngestionPipeline:

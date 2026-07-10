@@ -1,4 +1,4 @@
-from mayday.utils.http import HTTPClient
+from mayday.ingestion.clients.http import HTTPClient
 
 
 def test_http_client_creation():

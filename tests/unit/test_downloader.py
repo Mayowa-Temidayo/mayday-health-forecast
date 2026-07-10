@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from mayday.ingestion.base import BaseDataSource
-from mayday.ingestion.downloader import Downloader
+from mayday.ingestion.utils.downloader import Downloader
 
 
 class DummySource(BaseDataSource):

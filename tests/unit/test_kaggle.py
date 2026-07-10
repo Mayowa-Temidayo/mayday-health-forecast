@@ -1,5 +1,5 @@
 from mayday.core.settings import settings
-from mayday.ingestion.kaggle import KaggleDataSource
+from mayday.ingestion.sources.kaggle import KaggleDataSource
 
 
 def test_dataset_name():
