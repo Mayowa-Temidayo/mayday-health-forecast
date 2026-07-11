@@ -19,8 +19,8 @@ class NASAPowerSettings(BaseModel):
     community: str
     parameters: list[str]
     format: str
-    start: str
-    end: str
+    start_year: int
+    end_year: int
 
 
 class DataSettings(BaseModel):

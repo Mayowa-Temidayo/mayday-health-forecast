@@ -34,7 +34,7 @@ dev = ["black>=26.5.1", "pyright>=1.1.411", "pytest>=9.1.1", "ruff>=0.15.20"]
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
-markers = ["integration: marks tests that require external services"]
+markers = ["integration: tests requiring external services"]
 
 [build-system]
 requires = ["hatchling"]

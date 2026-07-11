@@ -13,14 +13,16 @@ kaggle:
 
 nasa_power:
   base_url: "https://power.larc.nasa.gov/api/temporal/daily/point"
+
   parameters:
+    - PRECTOTCORR
     - T2M
     - RH2M
-    - PRECTOTCORR
+
+  start_year: 2020
+  end_year: 2025
   community: AG
   format: JSON
-  start: "2020-01-01"
-  end: "2025-12-31"
 
 data:
   raw: data/raw

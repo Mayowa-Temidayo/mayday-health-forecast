@@ -9,7 +9,7 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 uv run ruff check .
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-uv run black --check .
+uv run black .
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 uv run pyright

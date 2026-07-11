@@ -12,9 +12,12 @@ class Downloader:
         self.sources = sources
 
     def download_all(self) -> list[Path]:
-        downloaded_files: list[Path] = []
+        """
+        Download every configured data source.
+        """
+        downloaded: list[Path] = []
 
         for source in self.sources:
-            downloaded_files.append(source.download())
+            downloaded.append(source.download())
 
-        return downloaded_files
+        return downloaded

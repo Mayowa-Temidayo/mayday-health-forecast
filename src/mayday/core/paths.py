@@ -13,6 +13,8 @@ INTERIM_DATA_DIR = DATA_DIR / "interim"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
 
+METADATA_DIR = PROJECT_ROOT / "data" / "metadata"
+
 # Models
 MODELS_DIR = PROJECT_ROOT / "models"
 

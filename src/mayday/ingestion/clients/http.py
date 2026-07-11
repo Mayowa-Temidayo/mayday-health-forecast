@@ -11,8 +11,15 @@ class HTTPClient:
     def __init__(self, timeout: float = 30.0):
         self.client = httpx.Client(timeout=timeout)
 
-    def get(self, url: str, params: dict[str, Any]) -> dict[str, Any]:
-        response = self.client.get(url, params=params)
+    def get(
+        self,
+        url: str,
+        params: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        response = self.client.get(
+            url,
+            params=params,
+        )
 
         response.raise_for_status()
 

@@ -1,7 +1,6 @@
 from pathlib import Path
 
 from mayday.ingestion.utils.downloader import Downloader
-from mayday.ingestion.utils.validator import DataValidator
 
 
 class DataIngestionPipeline:
@@ -13,12 +12,21 @@ class DataIngestionPipeline:
         self.downloader = downloader
 
     def run(self) -> list[Path]:
-        downloaded = self.downloader.download_all()
+        downloaded_files = self.downloader.download_all()
 
-        valid_files: list[Path] = []
+        prepared_files: list[Path] = []
 
-        for file in downloaded:
-            if DataValidator.validate(file):
-                valid_files.append(file)
+        for source, downloaded in zip(
+            self.downloader.sources,
+            downloaded_files,
+        ):
+            extracted = source.extract(downloaded)
 
-        return valid_files
+            if not source.validate(extracted):
+                raise RuntimeError(f"Validation failed for {downloaded}")
+
+            prepared = source.prepare(extracted)
+
+            prepared_files.append(prepared)
+
+        return prepared_files
