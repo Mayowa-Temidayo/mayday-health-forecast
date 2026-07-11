@@ -2,57 +2,65 @@ from pathlib import Path
 
 import pandas as pd
 
-from mayday.core.paths import EXTERNAL_DATA_DIR
+from mayday.core.paths import NASA_POWER_DIR
 from mayday.geography.loader import load_state_coordinates
+from mayday.ingestion.base import BaseDataSource
 from mayday.ingestion.clients.nasa_power import NasaPowerClient
-from mayday.ingestion.utils.json_to_dataframe import power_json_to_dataframe
 
 
 class NasaPowerDataSource(BaseDataSource):
     """
-    Downloads environmental variables from the NASA POWER API.
+    Downloads daily environmental variables from NASA POWER.
     """
 
     def __init__(self) -> None:
         self.client = NasaPowerClient()
 
+        self.output_file = NASA_POWER_DIR / "nasa_power_daily.csv"
+
     def download(self) -> Path:
         """
         Download NASA POWER data for every Nigerian state.
         """
+        coordinates = load_state_coordinates()
 
-        output_dir = EXTERNAL_DATA_DIR / "nasa_power"
-        output_dir.mkdir(parents=True, exist_ok=True)
+        results = self.client.get_states_data(coordinates)
 
-        states = load_state_coordinates()
+        rows: list[dict] = []
 
-        dataframes: list[pd.DataFrame] = []
+        for state, payload in results.items():
+            parameters = payload["properties"]["parameter"]
 
-        for _, state in states.iterrows():
-            response = self.client.get_daily_data(
-                latitude=state["latitude"],
-                longitude=state["longitude"],
-            )
+            dates = next(iter(parameters.values())).keys()
 
-            df = power_json_to_dataframe(response)
+            for date in dates:
+                row = {
+                    "state": state,
+                    "date": date,
+                }
 
-            df["state"] = state["state"]
+                for variable, values in parameters.items():
+                    row[variable] = values.get(date)
 
-            dataframes.append(df)
+                rows.append(row)
 
-        final_df = pd.concat(dataframes, ignore_index=True)
+        dataframe = pd.DataFrame(rows)
 
-        output_file = output_dir / "nasa_power_daily.csv"
+        dataframe.to_csv(
+            self.output_file,
+            index=False,
+        )
 
-        final_df.to_csv(output_file, index=False)
-
-        return output_file
+        return self.output_file
 
     def extract(self, source: Path) -> Path:
         return source
 
     def validate(self, source: Path) -> bool:
-        return source.exists() and source.stat().st_size > 0
+        return source.exists()
 
     def prepare(self, source: Path) -> Path:
         return source
+
+    def close(self) -> None:
+        self.client.close()

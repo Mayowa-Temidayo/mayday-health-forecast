@@ -4,6 +4,7 @@ import typer
 
 from mayday.ingestion.pipeline import DataIngestionPipeline
 from mayday.ingestion.sources.kaggle import KaggleDataSource
+from mayday.ingestion.sources.nasa_power import NasaPowerDataSource
 from mayday.ingestion.utils.downloader import Downloader
 
 app = typer.Typer(
@@ -35,8 +36,13 @@ def ingest() -> None:
 
     start = time.perf_counter()
 
-    datasource = KaggleDataSource()
-    downloader = Downloader([datasource])
+    sources = [
+        KaggleDataSource(),
+        NasaPowerDataSource(),
+    ]
+
+    downloader = Downloader(sources)
+
     pipeline = DataIngestionPipeline(downloader)
 
     files = pipeline.run()
