@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from mayday.ingestion.sources.nasa_power import NasaPowerDataSource
 
 
