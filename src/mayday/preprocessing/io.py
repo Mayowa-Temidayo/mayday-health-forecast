@@ -3,6 +3,8 @@ Input/output utilities for preprocessing.
 """
 
 from pathlib import Path
+from mayday.datasets.versioning import DatasetVersionManager
+import shutil
 
 import pandas as pd
 
@@ -33,20 +35,32 @@ def save_processed(
     filename: str = "modeling_dataset",
 ) -> Path:
     """
-    Save the processed dataset.
+    Save the processed dataset using an automatically
+    incremented dataset version.
 
-    Currently only CSV is persisted.
-    The DatasetIO abstraction already supports future
-    Parquet integration when compatible hardware is
-    available.
+    Returns the versioned CSV path.
     """
 
-    csv_path = PROCESSED_DATA_DIR / f"{filename}.csv"
+    version_manager = DatasetVersionManager()
+
+    version = version_manager.next_version(
+        prefix=filename,
+    )
+
+    versioned_name = f"{filename}_v{version}"
+
+    csv_path = PROCESSED_DATA_DIR / f"{versioned_name}.csv"
 
     DatasetIO.save(
         dataframe=dataframe,
         path=csv_path,
         format="csv",
+    )
+    latest_path = PROCESSED_DATA_DIR / f"{filename}_latest.csv"
+
+    shutil.copy2(
+        csv_path,
+        latest_path,
     )
 
     return csv_path

@@ -1,8 +1,6 @@
 import pandas as pd
 
-from mayday.features.builder import (
-    build_feature_pipeline,
-)
+from mayday.features.builder import FeatureBuilder
 
 
 def test_feature_pipeline() -> None:
@@ -25,7 +23,7 @@ def test_feature_pipeline() -> None:
         }
     )
 
-    pipeline = build_feature_pipeline()
+    pipeline = FeatureBuilder.build()
 
     result = pipeline.run(df)
 

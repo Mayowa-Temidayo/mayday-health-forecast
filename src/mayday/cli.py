@@ -2,6 +2,9 @@ import time
 
 import typer
 
+from mayday.core.paths import PROCESSED_DATA_DIR
+from mayday.datasets.io import DatasetIO
+from mayday.features.builder import FeatureBuilder
 from mayday.ingestion.pipeline import DataIngestionPipeline
 from mayday.ingestion.sources.kaggle import KaggleDataSource
 from mayday.ingestion.sources.nasa_power import NasaPowerDataSource
@@ -19,63 +22,81 @@ def main() -> None:
     """
     MayDay Health Forecast command line interface.
     """
-    pass
+
+
+def _header(title: str) -> float:
+    """
+    Display a command header and start a timer.
+    """
+    typer.secho(
+        f"\n=== {title} ===",
+        fg=typer.colors.CYAN,
+        bold=True,
+    )
+
+    return time.perf_counter()
+
+
+def _footer(
+    elapsed: float,
+) -> None:
+    """
+    Display completion information.
+    """
+    typer.echo()
+
+    typer.secho(
+        f"Completed in {elapsed:.2f} seconds.",
+        fg=typer.colors.GREEN,
+        bold=True,
+    )
 
 
 @app.command()
 def ingest() -> None:
     """
-    Download and prepare datasets.
+    Download and prepare raw datasets.
     """
-    typer.secho(
-        "\n=== MayDay Health Forecast ===",
-        fg=typer.colors.CYAN,
-        bold=True,
-    )
 
-    typer.echo("Starting ingestion...\n")
-
-    start = time.perf_counter()
+    start = _header("MayDay Health Forecast")
 
     sources = [
         KaggleDataSource(),
         NasaPowerDataSource(),
     ]
 
-    downloader = Downloader(sources)
+    downloader = Downloader(
+        sources,
+    )
 
-    pipeline = DataIngestionPipeline(downloader)
+    pipeline = DataIngestionPipeline(
+        downloader,
+    )
 
     files = pipeline.run()
 
     elapsed = time.perf_counter() - start
 
-    typer.secho("Prepared datasets:", fg=typer.colors.GREEN)
+    typer.echo()
+
+    typer.secho(
+        "Prepared datasets:",
+        fg=typer.colors.GREEN,
+    )
 
     for file in files:
         typer.echo(f"  ✓ {file}")
 
-    typer.echo()
-
-    typer.secho(
-        f"Ingestion completed in {elapsed:.2f} seconds.",
-        fg=typer.colors.GREEN,
-        bold=True,
-    )
+    _footer(elapsed)
 
 
+@app.command()
 def preprocess() -> None:
     """
     Execute the preprocessing pipeline.
     """
 
-    typer.secho(
-        "\n=== Data Preprocessing ===",
-        fg=typer.colors.CYAN,
-        bold=True,
-    )
-
-    start = time.perf_counter()
+    start = _header("Data Preprocessing")
 
     pipeline = PreprocessingPipeline()
 
@@ -83,16 +104,55 @@ def preprocess() -> None:
 
     elapsed = time.perf_counter() - start
 
+    typer.echo()
+
     typer.secho(
-        f"Processed dataset saved to:\n  {output}",
+        "Generated dataset:",
         fg=typer.colors.GREEN,
     )
 
-    typer.secho(
-        f"Completed in {elapsed:.2f} seconds.",
-        fg=typer.colors.GREEN,
-        bold=True,
+    typer.echo(f"  ✓ {output}")
+
+    _footer(elapsed)
+
+
+@app.command()
+def features() -> None:
+    """
+    Generate engineered features.
+    """
+
+    start = _header("Feature Engineering")
+
+    dataset = DatasetIO.load(
+        PROCESSED_DATA_DIR / "modeling_dataset_latest.csv",
     )
+
+    pipeline = FeatureBuilder.build()
+
+    engineered = pipeline.run(
+        dataset,
+    )
+
+    output = PROCESSED_DATA_DIR / "feature_dataset_latest.csv"
+
+    DatasetIO.save(
+        dataframe=engineered,
+        path=output,
+    )
+
+    elapsed = time.perf_counter() - start
+
+    typer.echo()
+
+    typer.secho(
+        "Generated feature dataset:",
+        fg=typer.colors.GREEN,
+    )
+
+    typer.echo(f"  ✓ {output}")
+
+    _footer(elapsed)
 
 
 if __name__ == "__main__":

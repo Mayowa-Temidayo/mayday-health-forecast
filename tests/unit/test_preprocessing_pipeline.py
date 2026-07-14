@@ -27,4 +27,6 @@ def test_pipeline_run_returns_output_path() -> None:
 
     assert output.exists()
 
-    assert output.name == "modeling_dataset.csv"
+    assert output.name.startswith("modeling_dataset_v")
+
+    assert output.suffix == ".csv"

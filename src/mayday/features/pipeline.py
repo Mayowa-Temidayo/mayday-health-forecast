@@ -12,18 +12,19 @@ class FeaturePipeline:
         self,
         transformers: list[BaseFeatureTransformer],
     ) -> None:
-        self.transformers = transformers
+        self._transformers = transformers
 
     def run(
         self,
         data: pd.DataFrame,
     ) -> pd.DataFrame:
         """
-        Apply each transformer in sequence.
+        Apply every feature transformer in sequence.
         """
-        df = data.copy()
 
-        for transformer in self.transformers:
-            df = transformer.transform(df)
+        dataset = data.copy()
 
-        return df
+        for transformer in self._transformers:
+            dataset = transformer.transform(dataset)
+
+        return dataset
