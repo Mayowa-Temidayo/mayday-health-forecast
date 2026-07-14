@@ -48,5 +48,5 @@ class PreprocessingPipeline:
 
         return save_processed(
             merged,
-            "model_dataset.csv",
+            "modeling_dataset",
         )
