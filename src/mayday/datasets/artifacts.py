@@ -25,4 +25,17 @@ class DatasetArtifact:
     path: Path
     format: str
     metadata: DatasetMetadata
-    created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
+    created_at: datetime = field(
+        default_factory=lambda: datetime.now(UTC),
+    )
+
+
+@dataclass(slots=True, frozen=True)
+class TrainingDatasetArtifacts:
+    """
+    Collection of artifacts produced by the training pipeline.
+    """
+
+    train: DatasetArtifact
+    validation: DatasetArtifact
+    test: DatasetArtifact
